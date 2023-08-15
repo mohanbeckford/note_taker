@@ -26,4 +26,23 @@ router.post('/notes', (req, res) => {
   res.status(201).json(newNote);
 });
 
+//-- ------------------
+
+router.delete('/notes/:id', (req, res) => {
+  const noteId = parseInt(req.params.id);
+
+  // Find the index of the note with the specified ID
+  const noteIndex = notes.findIndex(note => note.id === noteId);
+
+  if (noteIndex === -1) {
+    return res.status(404).json({ error: 'Note not found.' });
+  }
+
+  // Remove the note from the array
+  notes.splice(noteIndex, 1);
+
+  res.status(204).end(); // 204 No Content - Successful deletion
+});
+
+
 module.exports = router;
